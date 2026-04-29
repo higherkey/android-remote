@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator, ScrollView } from 'react-native';
 
 interface Props {
   readonly tvName: string;
@@ -18,85 +18,95 @@ export function PairingScreen({ tvName, onPinSubmit, onCancel, isConnecting }: P
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Pair with TV</Text>
-      <Text style={styles.subtitle}>
-        Please look at your {tvName} screen and enter the 6-digit PIN below to connect securely.
-      </Text>
-
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.pinInput}
-          value={pin}
-          onChangeText={text => setPin(text.replaceAll(/\D/g, '').slice(0, 6))}
-          keyboardType="numeric"
-          autoFocus={true}
-          maxLength={6}
-          placeholder="000000"
-          placeholderTextColor="#48484A"
-          editable={!isConnecting}
-        />
-      </View>
-
-      <TouchableOpacity 
-        style={[styles.submitButton, (pin.length < 6 || isConnecting) && styles.submitButtonDisabled]} 
-        onPress={handleSubmit}
-        disabled={pin.length < 6 || isConnecting}
+    <View style={styles.outerContainer}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
-        {isConnecting ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.submitButtonText}>Pair Device</Text>
-        )}
-      </TouchableOpacity>
+        <Text style={styles.header}>Pair with TV</Text>
+        <Text style={styles.subtitle}>
+          Please look at your {tvName} screen and enter the 6-digit PIN below to connect securely.
+        </Text>
 
-      <TouchableOpacity 
-        style={styles.cancelButton} 
-        onPress={onCancel}
-        disabled={isConnecting}
-      >
-        <Text style={styles.cancelButtonText}>Cancel</Text>
-      </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.pinInput}
+            value={pin}
+            onChangeText={text => setPin(text.replaceAll(/\D/g, '').slice(0, 6))}
+            keyboardType="numeric"
+            autoFocus={true}
+            maxLength={6}
+            placeholder="000000"
+            placeholderTextColor="#48484A"
+            editable={!isConnecting}
+          />
+        </View>
+
+        <TouchableOpacity 
+          style={[styles.submitButton, (pin.length < 6 || isConnecting) && styles.submitButtonDisabled]} 
+          onPress={handleSubmit}
+          disabled={pin.length < 6 || isConnecting}
+        >
+          {isConnecting ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.submitButtonText}>Pair Device</Text>
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.cancelButton} 
+          onPress={onCancel}
+          disabled={isConnecting}
+        >
+          <Text style={styles.cancelButtonText}>Cancel</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
     backgroundColor: '#121212',
-    paddingTop: 80,
+  },
+  container: {
+    flexGrow: 1,
+    paddingTop: 40,
+    paddingBottom: 32,
     paddingHorizontal: 20,
     alignItems: 'center',
   },
   header: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: '700',
     color: '#fff',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#A1A1AA',
     textAlign: 'center',
-    marginBottom: 40,
-    lineHeight: 22,
+    marginBottom: 28,
+    lineHeight: 21,
     paddingHorizontal: 10,
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 40,
+    marginBottom: 28,
     alignItems: 'center',
   },
   pinInput: {
-    fontSize: 48,
+    fontSize: 36,
     fontWeight: '700',
-    letterSpacing: 12,
+    letterSpacing: 10,
     color: '#0A84FF',
     textAlign: 'center',
     borderBottomWidth: 2,
     borderBottomColor: '#2C2C2E',
-    paddingBottom: 10,
+    paddingBottom: 8,
     width: '80%',
   },
   submitButton: {

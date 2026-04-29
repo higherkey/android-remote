@@ -21,6 +21,7 @@
       }
     },
     "android": {
+      "package": "com.higherkey.androidremote",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",

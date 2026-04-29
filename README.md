@@ -132,6 +132,11 @@ This compiles the native code and installs the app directly on your device, wher
 
 ---
 
+### 4. Hosting & Distribution
+To host this app online for others to use, see the [Hosting & Distribution Guide](./docs/hosting-and-distribution.md).
+
+---
+
 ## Project Structure
 
 ```
